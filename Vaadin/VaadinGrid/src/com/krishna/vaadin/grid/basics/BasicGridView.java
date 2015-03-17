@@ -4,56 +4,143 @@
 package com.krishna.vaadin.grid.basics;
 
 import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.krishna.vaadin.grid.DatasourceFactory;
 import com.krishna.vaadin.grid.MyView;
 import com.krishna.vaadin.grid.vos.Customer;
-import com.krishna.vaadin.grid.vos.Customer.Gender;
 import com.vaadin.data.Container.Indexed;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.SelectionEvent;
+import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.grid.HeightMode;
-import com.vaadin.ui.CssLayout;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.renderers.DateRenderer;
 
 /**
+ * 
  * @author Krishna
  *
  */
-public class BasicGridView extends CssLayout implements MyView {
+public class BasicGridView extends VerticalLayout implements MyView {
 
 	/**
-	 * 
+	 * Default Serial Version ID
 	 */
 	private static final long serialVersionUID = -4621381457091406226L;
 
-	private Grid grid;
+	protected Grid grid;
 
+	private Label label;
+
+	/**
+	 * Basic Constructor
+	 */
 	public BasicGridView() {
 		init();
 		setWidth(100, Unit.PERCENTAGE);
 		setHeight(100, Unit.PERCENTAGE);
+		setSpacing(true);
+		setImmediate(true);
 	}
 
+	/**
+	 * Init
+	 */
 	private void init() {
 		// Init the grid with Caption, alternatively can initialize the same
 		// with passing the datasource
 		grid = new Grid("My Basic Grid");
 		grid.setContainerDataSource(getDatasource());
+		grid.setImmediate(true);
+		initSelectionMode();
 		initGridProperties();
-
 		// Init the columns
 		initGridColumns();
+		initLabel();
+		initSelectionListeners();
 	}
 
+	private void initSelectionMode() {
+		final CheckBox checkBox = new CheckBox("Multi Select");
+		addComponent(checkBox);
+		checkBox.setImmediate(true);
+		checkBox.setValue(false);
+		checkBox.addValueChangeListener(new ValueChangeListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1261311232228188664L;
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if (checkBox.getValue()) {
+					grid.setSelectionMode(SelectionMode.MULTI);
+					grid.recalculateColumnWidths();
+					for (Column column : grid.getColumns()) {
+						column.setExpandRatio(1);
+					}
+				} else {
+					grid.setSelectionMode(SelectionMode.SINGLE);
+				}
+			}
+		});
+	}
+
+	/**
+	 * Init Grid Selection Listeners
+	 */
+	private void initSelectionListeners() {
+		grid.addSelectionListener(new SelectionListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7630487081608214268L;
+
+			@Override
+			public void select(SelectionEvent event) {
+				Set<Object> itemIDs = event.getSelected();
+				if (itemIDs.isEmpty()) {
+					label.setValue("");
+				} else {
+					StringBuilder renderingText = new StringBuilder();
+					for (Object itemID : itemIDs) {
+						Customer customer = (Customer) itemID;
+						renderingText.append("Customer with ID - "
+								+ customer.getCustomerID() + " and Name - "
+								+ customer.getCustomerName() + "\n");
+					}
+					label.setValue(renderingText.toString());
+				}
+
+			}
+		});
+	}
+
+	/**
+	 * Init labels
+	 */
+	private void initLabel() {
+		label = new Label();
+		label.setImmediate(true);
+		label.setContentMode(ContentMode.TEXT);
+	}
+
+	/**
+	 * Initializes basic properties of the grid
+	 */
 	private void initGridProperties() {
-		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.setHeightMode(HeightMode.ROW);
 		grid.setWidth(100, Unit.PERCENTAGE);
 		grid.setColumnOrder(new Object[] { "customerName", "city", "pincode",
@@ -81,35 +168,26 @@ public class BasicGridView extends CssLayout implements MyView {
 
 	}
 
+	/**
+	 * Sets up datasource that needs to be attached the table
+	 * 
+	 * @return
+	 */
 	private Indexed getDatasource() {
 
 		BeanItemContainer<Customer> container = new BeanItemContainer<Customer>(
 				Customer.class);
-		container.addAll(getCustomerList());
+		container.addAll(DatasourceFactory.getCustomerDatasource(20));
 		return container;
 
 	}
 
-	private Set<Customer> getCustomerList() {
-		Set<Customer> customers = new LinkedHashSet<Customer>();
-		Calendar cal = GregorianCalendar.getInstance();
-		cal.set(Calendar.YEAR, 1987);
-		cal.set(Calendar.MONTH, Calendar.JULY);
-		cal.set(Calendar.DAY_OF_MONTH, 22);
-		for (int i = 1; i < 10; i++) {
-			customers.add(new Customer(i, "Customer Name - " + i,
-					cal.getTime(), "City - " + i, i % 2 == 0 ? Gender.Male
-							: Gender.Female));
-			cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
-		}
-		return customers;
-	}
-
-	@Override
 	public void attach() {
 		super.attach();
 		addComponent(grid);
-
+		addComponent(label);
+		setExpandRatio(grid, 1f);
+		setExpandRatio(label, 0.5f);
 	}
 
 	@Override
@@ -119,7 +197,7 @@ public class BasicGridView extends CssLayout implements MyView {
 
 	@Override
 	public boolean isCached() {
-		return false;
+		return true;
 	}
 
 }
