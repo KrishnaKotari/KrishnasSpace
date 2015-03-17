@@ -9,11 +9,11 @@ import java.util.GregorianCalendar;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.krishna.vaadin.grid.MyView;
 import com.krishna.vaadin.grid.vos.Customer;
 import com.krishna.vaadin.grid.vos.Customer.Gender;
 import com.vaadin.data.Container.Indexed;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.CssLayout;
@@ -26,7 +26,7 @@ import com.vaadin.ui.renderers.DateRenderer;
  * @author Krishna
  *
  */
-public class BasicGridView extends CssLayout implements View {
+public class BasicGridView extends CssLayout implements MyView {
 
 	/**
 	 * 
@@ -58,7 +58,8 @@ public class BasicGridView extends CssLayout implements View {
 		grid.setWidth(100, Unit.PERCENTAGE);
 		grid.setColumnOrder(new Object[] { "customerName", "city", "pincode",
 				"gender" });
-		Column customerID = grid.getColumn("customerID");
+		// Hiding is not supported by Grid, in order to remove/hide a column use
+		// this API
 		grid.removeColumn("customerID");
 		Column dob = grid.getColumn("dob");
 		dob.setRenderer(new DateRenderer(DateFormat
@@ -97,7 +98,7 @@ public class BasicGridView extends CssLayout implements View {
 		cal.set(Calendar.DAY_OF_MONTH, 22);
 		for (int i = 1; i < 10; i++) {
 			customers.add(new Customer(i, "Customer Name - " + i,
-					cal.getTime(), "city - " + i, i % 2 == 0 ? Gender.Male
+					cal.getTime(), "City - " + i, i % 2 == 0 ? Gender.Male
 							: Gender.Female));
 			cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
 		}
@@ -114,6 +115,11 @@ public class BasicGridView extends CssLayout implements View {
 	@Override
 	public void enter(ViewChangeEvent event) {
 
+	}
+
+	@Override
+	public boolean isCached() {
+		return false;
 	}
 
 }
