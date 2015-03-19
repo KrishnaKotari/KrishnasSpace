@@ -26,4 +26,7 @@ $v-component-group-spacing: 6px;
   @include valo;
 
   /* Insert your theme rules here */
+  .v-grid-cell{
+  	text-align:center !important;
+  }
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 
 import com.krishna.vaadin.grid.basics.BasicGridView;
+import com.krishna.vaadin.grid.basics.HeaderGrid;
 import com.krishna.vaadin.grid.basics.HomeView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -124,6 +125,7 @@ public class VaadinUI extends UI {
 	private Map<String, Class<? extends MyView>> getViewProvider() {
 		Map<String, Class<? extends MyView>> myViews = new HashMap<String, Class<? extends MyView>>();
 		myViews.put("BasicGrid", BasicGridView.class);
+		myViews.put("AdvancedGrid", HeaderGrid.class);
 		return myViews;
 	}
 

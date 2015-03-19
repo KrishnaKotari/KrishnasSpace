@@ -6,9 +6,9 @@ package com.krishna.vaadin.grid.basics;
 import java.text.DateFormat;
 import java.util.Set;
 
-import com.krishna.vaadin.grid.DatasourceFactory;
 import com.krishna.vaadin.grid.MyView;
-import com.krishna.vaadin.grid.vos.Customer;
+import com.krishna.vaadin.grid.data.Customer;
+import com.krishna.vaadin.grid.data.DatasourceFactory;
 import com.vaadin.data.Container.Indexed;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -70,6 +70,9 @@ public class BasicGridView extends VerticalLayout implements MyView {
 		initSelectionListeners();
 	}
 
+	/**
+	 * Init selection mode
+	 */
 	private void initSelectionMode() {
 		final CheckBox checkBox = new CheckBox("Multi Select");
 		addComponent(checkBox);
@@ -87,6 +90,9 @@ public class BasicGridView extends VerticalLayout implements MyView {
 				if (checkBox.getValue()) {
 					grid.setSelectionMode(SelectionMode.MULTI);
 					grid.recalculateColumnWidths();
+					// Seems to be some bug in Vaadin Grid when expand ration is
+					// not given the column shrinks and this is visible when
+					// selection mode is single
 					for (Column column : grid.getColumns()) {
 						column.setExpandRatio(1);
 					}
@@ -119,7 +125,7 @@ public class BasicGridView extends VerticalLayout implements MyView {
 						Customer customer = (Customer) itemID;
 						renderingText.append("Customer with ID - "
 								+ customer.getCustomerID() + " and Name - "
-								+ customer.getCustomerName() + "\n");
+								+ customer.getCustomerName() + "<br/>");
 					}
 					label.setValue(renderingText.toString());
 				}
@@ -134,7 +140,7 @@ public class BasicGridView extends VerticalLayout implements MyView {
 	private void initLabel() {
 		label = new Label();
 		label.setImmediate(true);
-		label.setContentMode(ContentMode.TEXT);
+		label.setContentMode(ContentMode.HTML);
 	}
 
 	/**
@@ -182,6 +188,7 @@ public class BasicGridView extends VerticalLayout implements MyView {
 
 	}
 
+	@Override
 	public void attach() {
 		super.attach();
 		addComponent(grid);

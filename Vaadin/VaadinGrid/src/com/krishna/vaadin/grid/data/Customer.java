@@ -1,4 +1,4 @@
-package com.krishna.vaadin.grid.vos;
+package com.krishna.vaadin.grid.data;
 
 import java.io.Serializable;
 import java.util.Date;
