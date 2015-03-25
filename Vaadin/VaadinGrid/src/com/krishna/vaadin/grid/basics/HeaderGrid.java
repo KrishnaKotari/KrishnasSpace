@@ -46,10 +46,6 @@ public class HeaderGrid extends AbstractGridView implements MyView {
 		HeaderCell q4Header = mainHeaderRow.getCell(baseYear + ".q4");
 		HeaderCell mainHeaderCell = mainHeaderRow.join(q1Header, q2Header,
 				q3Header, q4Header);
-		q1Header.setText("Quarter 1");
-		q2Header.setText("Quarter 2");
-		q3Header.setText("Quarter 3");
-		q4Header.setText("Quarter 4");
 		mainHeaderCell.setText(mainCellText);
 		return mainHeaderCell;
 

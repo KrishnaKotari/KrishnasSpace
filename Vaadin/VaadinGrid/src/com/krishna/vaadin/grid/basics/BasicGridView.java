@@ -61,6 +61,8 @@ public class BasicGridView extends VerticalLayout implements MyView {
 		// with passing the datasource
 		grid = new Grid("My Basic Grid");
 		grid.setContainerDataSource(getDatasource());
+		// new Customer(15432, "Test", new Date(), "myCity")
+
 		grid.setImmediate(true);
 		initSelectionMode();
 		initGridProperties();
@@ -171,7 +173,8 @@ public class BasicGridView extends VerticalLayout implements MyView {
 		pincode.setHeaderCaption("Pin Code");
 		gender.setHeaderCaption("Gender");
 		dob.setHeaderCaption("Date of Birth");
-
+		// Set Column order of Grid
+		grid.setColumnOrder("customerName", "dob", "city", "gender", "pincode");
 	}
 
 	/**
