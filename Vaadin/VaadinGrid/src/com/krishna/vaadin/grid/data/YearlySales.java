@@ -106,4 +106,12 @@ public class YearlySales implements Serializable {
 		this.q4 = q4;
 	}
 
+	/**
+	 * Method that calculates and returns total sales
+	 * 
+	 * @return
+	 */
+	public Long getTotalSales() {
+		return Long.valueOf(q1 + q2 + q3 + q4);
+	}
 }

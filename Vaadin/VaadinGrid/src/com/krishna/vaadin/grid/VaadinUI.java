@@ -1,12 +1,14 @@
 package com.krishna.vaadin.grid;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 
 import com.krishna.vaadin.grid.basics.BasicGridView;
+import com.krishna.vaadin.grid.basics.FilterGrid;
 import com.krishna.vaadin.grid.basics.FooterGrid;
+import com.krishna.vaadin.grid.basics.GeneratedColumns;
 import com.krishna.vaadin.grid.basics.HeaderGrid;
 import com.krishna.vaadin.grid.basics.HomeView;
 import com.vaadin.annotations.Theme;
@@ -123,10 +125,12 @@ public class VaadinUI extends UI {
 	}
 
 	private Map<String, Class<? extends MyView>> getViewProvider() {
-		Map<String, Class<? extends MyView>> myViews = new HashMap<String, Class<? extends MyView>>();
+		Map<String, Class<? extends MyView>> myViews = new LinkedHashMap<String, Class<? extends MyView>>();
 		myViews.put("BasicGrid", BasicGridView.class);
 		myViews.put("HeaderGrid", HeaderGrid.class);
 		myViews.put("FooterGrid", FooterGrid.class);
+		myViews.put("FilterGrid", FilterGrid.class);
+		myViews.put("GeneratedColumns", GeneratedColumns.class);
 		return myViews;
 	}
 

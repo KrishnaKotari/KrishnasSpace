@@ -25,6 +25,12 @@ public class FooterGrid extends HeaderGrid {
 	 */
 	private static final long serialVersionUID = -675554642434107113L;
 
+	protected static final String CATEGORY = "category";
+
+	protected static final String MANUFACTURER = "manufacturer";
+
+	protected static final String MODEL_NAME = "modelName";
+
 	/**
 	 * 
 	 */
@@ -39,12 +45,12 @@ public class FooterGrid extends HeaderGrid {
 	private void setUpFooter() {
 
 		FooterRow mainFooter = grid.prependFooterRow();
-		FooterCell mainFooterCell = mainFooter.join("category", "manufacturer",
-				"modelName");
+		FooterCell mainFooterCell = mainFooter.join(CATEGORY, MANUFACTURER,
+				MODEL_NAME);
 		mainFooterCell.setText("Total Vehicles Sold Per Quarter");
 		FooterRow secondaryFooter = grid.appendFooterRow();
-		FooterCell secondaryFooterCell = secondaryFooter.join("category",
-				"manufacturer", "modelName");
+		FooterCell secondaryFooterCell = secondaryFooter.join(CATEGORY,
+				MANUFACTURER, MODEL_NAME);
 		secondaryFooterCell.setText("Total Vehicles Sold Per Year");
 		setUpFooterForDataConsolidation(mainFooter, secondaryFooter);
 	}
@@ -89,7 +95,11 @@ public class FooterGrid extends HeaderGrid {
 			}
 			yearlySalesCell.setText(convertor.convertToPresentation(
 					yearlySalesValue, String.class, grid.getLocale()));
+			yearlySalesCell.setHtml("<b>"
+					+ convertor.convertToPresentation(yearlySalesValue,
+							String.class, grid.getLocale()) + " <b>");
 		}
+
 	}
 
 	/*

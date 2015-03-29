@@ -12,6 +12,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -86,8 +87,14 @@ public abstract class AbstractGridView extends VerticalLayout implements MyView 
 
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.removeColumn("id");
+		grid.removeColumn("sales2012.totalSales");
+		grid.removeColumn("sales2013.totalSales");
+		grid.removeColumn("sales2014.totalSales");
 		grid.setImmediate(true);
 		grid.setHeightMode(HeightMode.CSS);
+		for (Column column : grid.getColumns()) {
+			column.setExpandRatio(1);
+		}
 	}
 
 	protected void addComponentsToLayout() {

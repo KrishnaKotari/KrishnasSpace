@@ -113,7 +113,6 @@ public class DatasourceFactory {
 					random.nextInt(1000000));
 			yearlySales.add(sales);
 		}
-		System.out.println("YearlySales Data - " + yearlySales.size());
 		return yearlySales;
 	}
 
