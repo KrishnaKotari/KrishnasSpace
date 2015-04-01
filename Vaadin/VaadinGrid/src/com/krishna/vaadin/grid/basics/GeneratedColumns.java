@@ -36,10 +36,13 @@ public class GeneratedColumns extends FooterGrid {
 	 */
 	private void addGeneratedColumn() {
 
+		// Get the container if you have already set it to grid and wrap it in
+		// GeneratedPropertyContainer
 		GeneratedPropertyContainer container = new GeneratedPropertyContainer(
 				grid.getContainerDataSource());
 		grid.setContainerDataSource(container);
-		// setDefaultGridProperties();
+
+		// Add a generated Column to the table
 		container.addGeneratedProperty("totalSalesTillDate",
 				new PropertyValueGenerator<Double>() {
 
@@ -63,8 +66,12 @@ public class GeneratedColumns extends FooterGrid {
 				new ProgressBarRenderer());
 		grid.getColumn("totalSalesTillDate")
 				.setHeaderCaption("Sales Till Date");
-		// Some how another Id is getting created for display
+		/*
+		 * Remove the properties you wish to hide. Have done it already in
+		 * native container? even then you have do it as this is a new container
+		 */
 		container.removeContainerProperty("id");
+		// A new getter called Total Sales was added for YearlySales
 		container.removeContainerProperty("sales2012.totalSales");
 		container.removeContainerProperty("sales2013.totalSales");
 		container.removeContainerProperty("sales2014.totalSales");

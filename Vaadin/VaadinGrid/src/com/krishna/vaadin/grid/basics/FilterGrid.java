@@ -57,11 +57,12 @@ public class FilterGrid extends FooterGrid {
 	 * @param filterRow
 	 */
 	private void setManufacturerFilter(HeaderRow filterRow) {
-		HeaderCell categoryFilter = filterRow.getCell(MANUFACTURER);
+		HeaderCell manufacturerFilter = filterRow.getCell(MANUFACTURER);
 		TextField textField = new TextField();
 		textField.setImmediate(true);
+		// On Change of text, trigger filter operation
 		textField.addTextChangeListener(getManufacturingFilterListener());
-		categoryFilter.setComponent(textField);
+		manufacturerFilter.setComponent(textField);
 	}
 
 	/**
@@ -93,6 +94,8 @@ public class FilterGrid extends FooterGrid {
 	}
 
 	/**
+	 * Returns the TextChangeListener that gets triggered
+	 * 
 	 * @return
 	 */
 	private TextChangeListener getManufacturingFilterListener() {
@@ -109,6 +112,8 @@ public class FilterGrid extends FooterGrid {
 				@SuppressWarnings("unchecked")
 				BeanItemContainer<VehicleInfo> container = ((BeanItemContainer<VehicleInfo>) grid
 						.getContainerDataSource());
+				// This is important, this removes the previous filter that was
+				// used to filter the container
 				container.removeContainerFilters(MANUFACTURER);
 				if (null != newValue && !newValue.isEmpty()) {
 					container.addContainerFilter(new SimpleStringFilter(
