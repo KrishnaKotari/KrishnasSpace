@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 
 import com.krishna.vaadin.grid.basics.BasicGridView;
+import com.krishna.vaadin.grid.basics.EditableGrid;
 import com.krishna.vaadin.grid.basics.FilterGrid;
 import com.krishna.vaadin.grid.basics.FooterGrid;
 import com.krishna.vaadin.grid.basics.GeneratedColumns;
@@ -131,6 +132,7 @@ public class VaadinUI extends UI {
 		myViews.put("FooterGrid", FooterGrid.class);
 		myViews.put("FilterGrid", FilterGrid.class);
 		myViews.put("GeneratedColumns", GeneratedColumns.class);
+		myViews.put("EditableGrid", EditableGrid.class);
 		return myViews;
 	}
 
