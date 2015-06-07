@@ -38,7 +38,6 @@
 			 conf="widgetset-compile->default" />
 			 
 		 <dependency org="org.hibernate" name="hibernate-validator" rev="5.1.3.Final"/>
-
 		<!-- Compiler for custom widget sets. Should not be deployed -->
 		<dependency org="com.vaadin" name="vaadin-client-compiler"
 			rev="&vaadin.version;" conf="widgetset-compile->default" />
