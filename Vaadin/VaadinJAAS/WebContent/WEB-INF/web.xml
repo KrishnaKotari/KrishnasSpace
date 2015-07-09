@@ -1,0 +1,25 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <security-constraint>
+    <display-name>SecureUIConstraint</display-name>
+    <web-resource-collection>
+      <web-resource-name>SecuredUI</web-resource-name>
+      <description>The authenticated part of the app</description>
+      <url-pattern>/secured/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <description>Only valid users are allowed</description>
+      <role-name>users</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <realm-name>ApplicationRealm</realm-name>
+    <form-login-config>
+      <form-login-page>/login</form-login-page>
+      <form-error-page>/login</form-error-page>
+    </form-login-config>
+  </login-config>
+  <security-role>
+    <role-name>users</role-name>
+  </security-role>
+</web-app>

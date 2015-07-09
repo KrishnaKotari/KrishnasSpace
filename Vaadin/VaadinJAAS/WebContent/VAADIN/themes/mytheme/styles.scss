@@ -1,0 +1,13 @@
+@import "addons.scss";
+@import "mytheme.scss";
+
+/* This file prefixes all rules with the theme name to avoid causing conflicts with other themes. */
+/* The actual styles should be defined in vaadinforms.scss */
+.mytheme {
+  @include addons;
+  @include mytheme;
+  
+  .v-button-dishButton, .v-button-categoryButton{
+  	margin:4px;
+  }
+}
